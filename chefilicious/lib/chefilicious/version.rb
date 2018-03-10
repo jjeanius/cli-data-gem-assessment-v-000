@@ -1,3 +1,3 @@
-module Cheficious
+module Chefilicious
   VERSION = "0.1.0"
 end
