@@ -1,6 +1,6 @@
 Chefilicious
 
-A command line interface for a non-subscription meal kit company (such as Chef D, Fresh Direct, Chefday...etc), which allow the consumer to see the meal kit information in one website
+A command line interface for a non-subscription meal kit company (such as Chef D, Fresh Direct, Chefday...etc), which allow the consumer to see the meal kit information in one website.
 
 * The application will scrape the information from various company websites and allow the consumer to see product information and make a selection.
 
