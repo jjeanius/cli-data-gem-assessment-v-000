@@ -2,7 +2,13 @@ class Chefilicious::CLI
 
   def call
     puts "Welcome to the Chefilicious!"
-    puts "What are you looking for?"
+    selections
+    meal_kits
+    goodbye
+  end
+
+  def selections
+    puts "What are you looking for?  Please enter a number"
     meal_type
     puts "Please select your desire cooking time:"
     cooking_time
@@ -14,8 +20,6 @@ class Chefilicious::CLI
     food_category
     puts "Please make your selection:"
     meal_kits
-    meal_details
-
   end
 
   def meal_type
@@ -24,9 +28,7 @@ class Chefilicious::CLI
           2. Lunch
           3. Dinner
           4. Dessert"
-    input = getS.strip
-
-
+    input = gets.strip
   end
 
   def cooking_time
@@ -35,7 +37,7 @@ class Chefilicious::CLI
           2. Between 21 to 45 minutes
           3. Between 45 to 60 minutes
           4. More than 60 Minutes"
-    input = getS.strip
+    input = gets.strip
   end
 
   def allergens
@@ -49,16 +51,17 @@ class Chefilicious::CLI
           7. Tree Nut
           8. Wheat
           9. No Allergens"
-    input = getS.strip
+    input = gets.strip
   end
 
   def cuisine
-    puts "
-          1. American
+    puts "1. American
           2. Asian (Chinese, Korean, Japanese, Thai, Vietnamese, Indian)
           3. Latin (Mexican)
-          4. Mediterranean (Greek, Spanish, French, Italian, Middle Eastern)"
-    input = getS.strip
+          4. Mediterranean (Greek, Spanish, French, Italian, Middle Eastern)
+          E. or e. Exit
+          P. or p. Previous Menu"
+    input = gets.strip
   end
 
   def food_category
@@ -70,12 +73,10 @@ class Chefilicious::CLI
           5. Grains/Pasta
           6. Sweets
           7. Special Dietary Needs"
-    input = getS.strip
+    input = gets.strip
   end
 
     def meal_kits
-
-
     end
 
     def meal_description
@@ -83,11 +84,9 @@ class Chefilicious::CLI
     end
 
     def order_now
-
     end
 
   end
-
 
 
 
