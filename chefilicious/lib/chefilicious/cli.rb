@@ -1,105 +1,150 @@
-class Chefilicious::CLI
+class ChefiliciousCliGem::CLI < ChefiliciousCliGem::Meal_Kits
 
   def call
+    ChefiliciousCliGem::Meal_Kits.scrape_all
+    Chefs.scrape_all_chefs
     puts "Welcome to the Chefilicious!"
-    selections
-    meal_kits
-    goodbye
+    puts "A place where your culinary experience comes to life!"
+    start
+    main_menu
   end
 
-  def selections
-    puts "What are you looking for?  Please enter a number"
-    meal_type
-    puts "Please select your desire cooking time:"
-    cooking_time
-    puts "Are you allergic to any of the following ingredientes?"
-    allergens
-    puts "Please select a cuisine:"
-    cuisine
-    puts "What do you like to cook?"
-    food_category
-    puts "Please make your selection:"
-    meal_kits
-  end
-
-  def meal_type
-    puts "
-          1. Breakfast
-          2. Lunch
-          3. Dinner
-          4. Dessert"
-    input = gets.strip
-  end
-
-  def cooking_time
-    puts "
-          1. Less than 20 minutes
-          2. Between 21 to 45 minutes
-          3. Between 45 to 60 minutes
-          4. More than 60 Minutes"
-    input = gets.strip
-  end
-
-  def allergens
-    puts "
-          1. Shellfish
-          2. Dairy
-          3. Egg
-          4. Fish
-          5. Peanut
-          6. Soy
-          7. Tree Nut
-          8. Wheat
-          9. No Allergens"
-    input = gets.strip
-  end
-
-  def cuisine
-    puts "1. American
-          2. Asian (Chinese, Korean, Japanese, Thai, Vietnamese, Indian)
-          3. Latin (Mexican)
-          4. Mediterranean (Greek, Spanish, French, Italian, Middle Eastern)
-          E. or e. Exit
-          P. or p. Previous Menu"
-    input = gets.strip
-  end
-
-  def food_category
-    puts "
-          1. Meat (Beef, Chicken, Lamb, Pork)
-          2. Fish
-          3. Poultry
-          4. Vegetable
-          5. Grains/Pasta
-          6. Sweets
-          7. Special Dietary Needs"
-    input = gets.strip
-  end
-
-    def meal_kits
+    def start
+      puts ""
+      puts "Please press any key to get started"
+      puts ""
+      input = gets.strip
     end
 
-    def meal_description
+    def main_menu
+      puts "What would you like more information on?"
+      puts "
+            1. Meal Kits
+            2. Our celebrity Chefs
+            3. Exit"
 
+      input = gets.strip.downcase
+
+      case input
+        when "1"
+          display_meal_kits(meal_kits)
+          puts "please select a Meal Kit:"
+          input = gets.strip
+
+          mealkit = ChefiliciousCliGem::Meal_Kits.find_by_mealkit(input.to_i)
+            puts ""
+              display_mealkit_description(mealkit)
+                puts ""
+                  good_bye
+
+        when "2"
+          display_chefs(input)
+            puts ""
+              puts "please select a chef:"
+                input = gets.strip
+                  mealkit_chef = Chefs.find_by_chef(input.to_i)
+                    display_chef_bio
+                      puts ""
+                        good_bye
+
+        when "3"
+          exit
+
+        else
+          puts "Please make a valid selection"
+        end
+        main_menu
+      end
+
+      def display_meal_kits(meal_kits)
+        puts ""
+        puts "---------------------- Discover Your Options! ---------------------------------"
+        puts ""
+        puts "          Name                           Time    Level   Cuisine     Price"
+        puts "--------------------------------------------------------------------------------"
+
+        counter = 1
+            @@all.each do |mealkit|
+              mealkit.name == mealkit
+                puts "#{counter} - #{mealkit.name} - #{mealkit.cooking_time} - #{mealkit.skill_level} - #{mealkit.cuisine} - #{mealkit.price}"
+                  until counter == 100
+                    counter += 1
+                    break
+            end
+          end
+        end
+
+
+      def display_mealkit_description(mealkit)
+        puts ""
+        puts ""
+        puts ""
+        puts "#{mealkit.name}"
+        puts ""
+        puts "----------- #{mealkit.name} - #{mealkit.cuisine} Cuisine -----------"
+        puts ""
+        #puts "Chef:              #{chef.name}"
+        puts "Skill Level:       #{mealkit.skill_level}"
+        puts "Food Category:     #{mealkit.food_category}"
+        puts "Allergen:          #{mealkit.allergen}"
+        puts "Cooking Time:      #{mealkit.cooking_time}"
+        puts "Price:             #{mealkit.price}"
+        puts "Website:           #{mealkit.url}"
+        puts ""
+        puts "------------------------------  Description  ------------------------------"
+        puts ""
+      # puts "#{mealkit.description}"
+        puts ""
+       good_bye
+     end
+
+
+    def display_chefs(chefs)
+     puts ""
+     puts "------------------- Our Famous Chefs ---------------------"
+     puts ""
+
+     counter = 1
+     Chefs.all.each do|famous_chef|
+       famous_chef == chef
+         until counter == 101
+         puts "#{counter} - #{chef_info.name} - {chef_info.knowfor}"
+         counter +=1
+         puts ""
+         puts ""
+         input.to_i = gets.strip
+         display_chef_bio
+       end
+      end
     end
 
-    def order_now
-    end
+    def display_chef_bio
+      #Chefs.all.each do|famous_chef|
+      #  famous_chef == chef
 
+      puts ""
+      puts ""
+      puts "---------------About #{chef_info.name}--------------"
+      puts ""
+      puts "Kow For:  #{chef_info.knowfor}"
+      puts ""
+      puts "#{chef_info.description}"
+      puts ""
+      good_bye
+    #end
   end
 
+     def good_bye
+      puts ""
+      puts "Would you like to see more information?  Enter Y or N"
+      input = gets.strip.downcase
+      if input == "y"
+        main_menu
+      else
+        puts ""
+        puts "Thank You! Have a wonderful day!"
+        exit
+      end
+    end
 
-
-
-
-
-
-
-
-    #* What are you looking for:  (list Type of Meal, Cooking Time, Allergens)
-    #* User makes selections on meal type, cooking time, allergens
-    #* What do you like to eat?   (list of Cuisine and food categories)
-    #* User makes selections on the cuisine and meal Category
-    #* The application will shows a list of meal kits (in column format) from all 3 companies with price, cooking time, and rating
-    #* User can select the dish and it will provide more information about the dish
-    #* There will be an "Order Now" button and it will let the user know that he/she is leaving the Chefilicious website, and he/she will be connected to the company's website
+end

@@ -2,4 +2,4 @@
 
 require_relative '../lib/chefilicious.rb'
 
-Chefilicious::CLI.new.call
+ChefiliciousCliGem::CLI.new.call
